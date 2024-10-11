@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Synthetic Data Generator - Upload Data Model{% endblock %}
+
+{% block content %}
+<h1>Upload Data Model File</h1>
+<p class="text-muted">Note: Your files are securely stored and only accessible by you.</p>
+<form method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="file" class="form-label">Select a file to upload (.sql, .csv, .txt)</label>
+        <input type="file" class="form-control" id="file" name="file" accept=".sql,.csv,.txt" required>
+    </div>
+    <button type="submit" class="btn btn-success mt-3">Upload</button>
+</form>
+{% endblock %}

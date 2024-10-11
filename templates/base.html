@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Synthetic Data Generator{% endblock %}</title>
+    <!-- Bootstrap CSS (from CDN) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Custom CSS (Optional) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
+    <!-- Bootstrap Icons (from CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            padding-top: 56px; /* Adjust for navbar height */
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        .sidebar {
+            position: fixed;
+            top: 30px; /* Adjust for navbar height */
+            bottom: 0;
+            left: 0;
+            width: 220px; /* Fixed width for the sidebar */
+            background-color: #f8f9fa;
+            padding-top: 20px; /* Increased padding to avoid overlap with the toggle button */
+            transition: width 0.3s ease; /* Smooth transition when collapsing */
+        }
+        .sidebar-collapsed {
+            width: 60px; /* Collapsed width */
+        }
+        .nav.flex-column {
+            margin-top: 40px; /* Push the list further down to ensure no overlap */
+        }
+        .sidebar .nav-link {
+            padding: 10px 20px;
+            transition: opacity 0.3s ease; /* Smooth transition for text visibility */
+        }
+        .sidebar-collapsed .nav-link {
+            padding: 10px 5px; /* Adjust padding when collapsed */
+        }
+        .sidebar .nav-link span {
+            display: inline-block; /* Keep span block-level */
+            transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth transition */
+        }
+        .sidebar-collapsed .nav-link span {
+            opacity: 0;
+            visibility: hidden; /* Hide text when collapsed */
+        }
+        .sidebar .nav-link.active {
+            font-weight: bold;
+        }
+        .toggle-btn {
+            cursor: pointer;
+            position: absolute; 
+            top: 10px;
+            left: 10px;
+            background-color: transparent; 
+            border: none;
+            color: #000000; 
+            font-size: 2rem; 
+            padding: 0px 10px 10px 10px; /* Padding: top, right, bottom, left */
+        }
+        .sidebar .group-label {
+            font-weight: bold;
+            margin-top: 10px;
+            padding-left: 15px;
+            transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth transition */
+        }
+        .sidebar-collapsed .group-label {
+            opacity: 0;
+            visibility: hidden; /* Hide date labels when collapsed */
+        }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('index') }}">Synthetic Data Generator</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('history') }}">History</a>
+                    </li>
+                    {% if session.get('user') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                {% if session.get('user') %}
+                    <span class="navbar-text">
+                        Signed in as {{ session['user'].get('name') }}
+                    </span>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    
+
+    <!-- Main Content Area -->
+    <div class="container-fluid main-content" id="main-content">
+        {% block content %}
+        <!-- Page-specific content will be injected here -->
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center text-muted py-3 mt-auto">
+        <div class="container">
+            <p>Synthetic Data Generator - Version: {{ config['VERSION'] }}</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS (from CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+
+    </script>
+</body>
+</html>

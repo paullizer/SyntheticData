@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Synthetic Data Generator - Home{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="mb-4">Welcome to the Synthetic Data Generator</h1>
+    <p class="lead mb-5">
+        Easily generate synthetic data based on your data models. Provide a data model, choose your preferences, and let our tool create the data for you.
+    </p>
+    <h2 class="mb-4">Get Started</h2>
+</div>
+<form method="post">
+    <div class="row justify-content-center">
+        <!-- Generate Synthetic Data -->
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Generate Synthetic Data</h5>
+                    <p class="card-text">Create synthetic datasets based on your custom data models.</p>
+                    <button type="submit" class="btn btn-success btn-lg mt-3">Start</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

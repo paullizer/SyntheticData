@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Synthetic Data Generator - View Result{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Display Original Data Model -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2>Your Data Model</h2>
+        </div>
+        <div class="card-body">
+            <pre>{{ result['data_model'] }}</pre>
+        </div>
+    </div>
+
+    {% if result['results'] %}
+        {% if result['results'].get('table') %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2>Data Preview (First 10 Rows)</h2>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    {% for header in result['results']['table'][0] %}
+                                        <th>{{ header }}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in result['results']['table'][1:] %}
+                                    <tr>
+                                        {% for cell in row %}
+                                            <td>{{ cell }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% elif result['results'].get('preview_data') %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2>Data Preview</h2>
+                </div>
+                <div class="card-body">
+                    <pre>{{ result['results']['preview_data'] }}</pre>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="text-center">
+            <a href="{{ url_for('download_data', result_id=result['id']) }}" class="btn btn-primary btn-lg">Download Data</a>
+        </div>
+    {% else %}
+        <p class="text-muted">No generated data available.</p>
+    {% endif %}
+</div>
+{% endblock %}

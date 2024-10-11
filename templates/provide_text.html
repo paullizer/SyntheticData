@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Synthetic Data Generator - Provide Data Model{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="mb-4">Provide Your Data Model</h1>
+    <p class="lead mb-5">
+        Enter your data model below. This could be a SQL schema, CSV headers, or any textual representation of your data structure.
+    </p>
+</div>
+<form method="post">
+    <div class="mb-4">
+        <label for="data_model" class="form-label fs-4">Data Model <span class="text-danger">*</span></label>
+        <textarea class="form-control" id="data_model" name="data_model" rows="12" placeholder="Enter your data model here" required></textarea>
+        <div class="form-text">Provide a clear definition of your data model.</div>
+    </div>
+    <div class="text-center mt-5">
+        <button type="submit" class="btn btn-success btn-lg">Next</button>
+    </div>
+</form>
+{% endblock %}

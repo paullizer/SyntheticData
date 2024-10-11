@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Synthetic Data Generator - History{% endblock %}
+
+{% block content %}
+<h1>Generated Data History</h1>
+
+<p class="text-muted">Only you have access to your generated data history. Your past results are securely stored and can be viewed or re-used at any time.</p>
+
+<!-- Search Form -->
+<form method="get" action="{{ url_for('history') }}">
+    <div class="input-group mb-3">
+        <input type="text" name="search" class="form-control" placeholder="Search by data model..." value="{{ search_query }}">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+</form>
+
+<!-- Results Table -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">
+                <a href="{{ url_for('history', sort_by='data_model', sort_order='asc' if sort_order == 'desc' else 'desc', search=search_query) }}">
+                    Data Model
+                    {% if sort_by == 'data_model' %}
+                        {% if sort_order == 'asc' %}
+                            <i class="bi bi-arrow-up"></i>
+                        {% else %}
+                            <i class="bi bi-arrow-down"></i>
+                        {% endif %}
+                    {% endif %}
+                </a>
+            </th>
+            <th scope="col">
+                <a href="{{ url_for('history', sort_by='timestamp', sort_order='asc' if sort_order == 'desc' else 'desc', search=search_query) }}">
+                    Time
+                    {% if sort_by == 'timestamp' %}
+                        {% if sort_order == 'asc' %}
+                            <i class="bi bi-arrow-up"></i>
+                        {% else %}
+                            <i class="bi bi-arrow-down"></i>
+                        {% endif %}
+                    {% endif %}
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for result in results %}
+        <tr>
+            <td>
+                <a href="{{ url_for('view_result', result_id=result['id']) }}">
+                    {{ result['data_model'][:50]|e }}{% if result['data_model']|length > 50 %}...{% endif %}
+                </a>
+            </td>
+            <td>{{ result['timestamp'] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

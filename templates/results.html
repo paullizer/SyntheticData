@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Synthetic Data Generator - Results{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="mb-4">Your Synthetic Data is Ready!</h1>
+    <p class="lead mb-5">
+        Below is your generated synthetic data based on the provided data model and preferences.
+    </p>
+</div>
+
+{% if data_model %}
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="card-title mb-0">Your Data Model</h2>
+        </div>
+        <div class="card-body">
+            <pre>{{ data_model }}</pre>
+        </div>
+    </div>
+{% endif %}
+
+{% if results %}
+    {% if preview and results.table %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2 class="card-title mb-0">Data Preview (First 10 Rows)</h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                {% for header in results.table[0] %}
+                                    <th>{{ header }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in results.table[1:] %}
+                                <tr>
+                                    {% for cell in row %}
+                                        <td>{{ cell }}</td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="text-center">
+        <a href="{{ url_for('download_data', result_id=result_id) }}" class="btn btn-primary btn-lg">Download Data</a>
+    </div>
+{% else %}
+    <p>No results to display.</p>
+{% endif %}
+
+<div class="text-center mt-5">
+    <a href="{{ url_for('index') }}" class="btn btn-secondary btn-lg">Start Over</a>
+</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Synthetic Data Generator - Choose Data Model Input Method{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="mb-4">How Would You Like to Provide Your Data Model?</h1>
+    <p class="lead mb-5">
+        Choose one of the following options to input your data model. You can either write it directly, upload a file, or select a previously saved model.
+    </p>
+    <h2 class="mb-4">Select an Input Method</h2>
+</div>
+<form method="post">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <!-- Provide Text Option -->
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Provide Data Model Text</h5>
+                    <p class="card-text">Manually enter your data model using our editor.</p>
+                    <input type="radio" class="btn-check" name="content_option" id="provide_text" value="provide_text" autocomplete="off" required>
+                    <label class="btn btn-outline-primary w-100" for="provide_text">Select</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Content Option -->
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Upload Data Model File</h5>
+                    <p class="card-text">Upload a .sql, .csv, or .txt file containing your data model. <br><strong>Your files are securely stored and only accessible by you.</strong></p>
+                    <input type="radio" class="btn-check" name="content_option" id="upload_content" value="upload_content" autocomplete="off" required>
+                    <label class="btn btn-outline-primary w-100" for="upload_content">Select</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Select File from Cosmos DB Option -->
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Select from Saved Models</h5>
+                    <p class="card-text">Choose a data model you previously uploaded.</p>
+                    <input type="radio" class="btn-check" name="content_option" id="select_file" value="select_file" autocomplete="off" required>
+                    <label class="btn btn-outline-primary w-100" for="select_file">Select</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-5">
+        <button type="submit" class="btn btn-success btn-lg">Next</button>
+    </div>
+</form>
+
+<!-- JavaScript to Change Label Text on Radio Button Selection -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const radios = document.querySelectorAll('input[name="content_option"]');
+
+        function updateLabels() {
+            radios.forEach(function(radio) {
+                const label = document.querySelector('label[for="' + radio.id + '"]');
+                label.innerText = radio.checked ? 'Selected' : 'Select';
+            });
+        }
+
+        // Initial label update
+        updateLabels();
+
+        radios.forEach(function(radio) {
+            radio.addEventListener('change', updateLabels);
+        });
+    });
+</script>
+{% endblock %}
