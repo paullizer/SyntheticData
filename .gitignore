@@ -17,3 +17,4 @@ __pycache__
 # Azure App Service artifacts
 .env
 .vscode
+settings.json
